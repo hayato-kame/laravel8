@@ -8,16 +8,9 @@
 @endsection
 
 @section('content')
-    <p>ここが本文のコンテンツです。</p>
-    <p>必要なだけ記述できます</p>
-
-    <p>
-        {{ $view_message }}
-    </p>
-    <p>
-        {{ $msg }}
-    </p>
-
+   <p>ここが本文のコンテンツです。</p>
+   <p>これは、<middleware>google.com</middleware>へのリンクです。</p>
+   <p>これは、<middleware>yahoo.co.jp</middleware>へのリンクです。</p>
 @endsection
 
 @section('footer')
