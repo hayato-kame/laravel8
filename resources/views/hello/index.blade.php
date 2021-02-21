@@ -1,6 +1,6 @@
 @extends('layouts.helloapp')
 
-@section('title','Index')
+@section('title', 'Index')
 
 @section('menubar')
     @parent
@@ -10,8 +10,16 @@
 @section('content')
     <p>ここが本文のコンテンツです。</p>
     <p>必要なだけ記述できます</p>
+
+    <p>
+        {{ $view_message }}
+    </p>
+    <p>
+        {{ $msg }}
+    </p>
+
 @endsection
 
 @section('footer')
-copyright 2020 tuyano.
+    copyright 2020 tuyano.
 @endsection
