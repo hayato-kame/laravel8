@@ -7,7 +7,8 @@ h1 { font-size: 100pt; text-align: right; color: #f6f6f6; margin: -50px 0px -100
 
 <body>
 <h1>Index</h1>
-<p>PHPのみ</p>
+<p><?php echo $msg; ?></p>
+<p><?php echo $id; ?></p>
 
 </body>
 
