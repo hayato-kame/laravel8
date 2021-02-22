@@ -42,21 +42,32 @@ class HelloController extends Controller
         $rules = [
             'name' => ['required'],
             'mail' => ['email'],
-            'age' => ['numeric' , 'between:0,150'],
+            'age' => ['numeric' ],
         ];
         $messages = [
             'name.required' => '名前は必ず入力してください。',
             'mail.email' => 'メールアドレスが必要です',
-            'age.numeric' => '年齢を整数で記入ください',
-            'age.between' => '年齢は0~150の間で記入してください',
+            'age.numeric' => '年齢は整数で記入してください',
+            'age.min' => '年齢はゼロ以上で記入ください',
+            'age.max' => '年齢は200歳以下で記入してください',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        // if ($validator->fails()) {
-        //     return redirect('/hello')->withErrors($validator)->withInput();
+        $validator->sometimes('age', 'min:0', function($input) {
+            return is_numeric($input->age);
+        });
 
-        // }
-            $validator->validate();
+        $validator->sometimes('age', 'max:200', function($input) {
+            return is_numeric($input->age);
+        });
+
+
+        if ($validator->fails()) {
+            return redirect('/hello')->withErrors($validator)->withInput();
+
+        }
+        // $validator->validate();
+
         return view('hello.index', ['msg' => '正しく入力されました。']);
    }
 
