@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\Myrule;
 
 class HelloRequest extends FormRequest
 {
@@ -35,9 +36,13 @@ class HelloRequest extends FormRequest
             // 'age' => 'numeric|between:0,150',
 
             // この書き方でもOKOK
+            // 'name' =>[ 'required'],
+            // 'mail' => ['email'],
+            // 'age' => ['numeric' , 'hello'],
+
             'name' =>[ 'required'],
             'mail' => ['email'],
-            'age' => ['numeric' , 'between:0,150'],
+            'age' => ['numeric' , new Myrule(5) ],
 
         ];
     }
@@ -48,7 +53,7 @@ class HelloRequest extends FormRequest
            'name.required' => '名前は必ず入力しれください',
            'mail.email' => 'メールアドレスが必要です',
            'age.numeric' => '年齢を整数で記入してください。',
-           'age.between' => '年齢は0~150の間で入力してください。',
+           'age.hello' => '年齢は偶数のみ受け付けるルールを作った',
        ];
    }
 }

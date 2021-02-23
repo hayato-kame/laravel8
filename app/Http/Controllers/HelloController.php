@@ -10,25 +10,39 @@ use App\Http\Requests\HelloRequest;
 // use Validator;
 use Illuminate\Support\Facades\Validator;
 
+
 class HelloController extends Controller
 {
    public function index(Request $request){
 
-        $validator = Validator::make($request->query(), [
-            'id' => ['required'],
-            'pass' => ['required'],
-        ]);
-        if ($validator->fails()) {
-            $msg = 'クエリーに問題があります';
+       if ($request->hasCookie('msg'))
+       {
+           $msg = 'Cookie: ' . $request->cookie('msg');
         } else {
-            $msg = 'ID/PASSを受け付けました';
+            $msg = '※クッキーはありません';
+            return view('hello.index', ['msg' => $msg]);
         }
-        return view('hello.index', ['msg' => $msg]);
-
    }
 
    public function post(Request $request)
-   {
+   {    
+
+        $validate_rule = [
+            'msg' => 'required',
+        ];
+        $this->validate($request, $validate_rule);
+
+        $msg = $request->msg;
+
+        $response = response()->view('hello.index', [
+            'msg' => $msg . 'をクッキーに保存した',
+        ]);
+
+        $response->cookie('msg', $msg, 100);
+
+        return $response;
+
+
         // $validator = Validator::make($request->all(), [
         //     'name' => ['required'],
         //     'mail' => ['email'],
@@ -39,36 +53,38 @@ class HelloController extends Controller
         // }
 
 
-        $rules = [
-            'name' => ['required'],
-            'mail' => ['email'],
-            'age' => ['numeric' ],
-        ];
-        $messages = [
-            'name.required' => '名前は必ず入力してください。',
-            'mail.email' => 'メールアドレスが必要です',
-            'age.numeric' => '年齢は整数で記入してください',
-            'age.min' => '年齢はゼロ以上で記入ください',
-            'age.max' => '年齢は200歳以下で記入してください',
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages);
+        // $rules = [
+        //     'name' => ['required'],
+        //     'mail' => ['email'],
+        //     'age' => ['numeric' ],
+        // ];
+        // $messages = [
+        //     'name.required' => '名前は必ず入力してください。',
+        //     'mail.email' => 'メールアドレスが必要です',
+        //     'age.numeric' => '年齢は整数で記入してください',
+        //     'age.min' => '年齢はゼロ以上で記入ください',
+        //     'age.max' => '年齢は200歳以下で記入してください',
+        // ];
+        // $validator = Validator::make($request->all(), $rules, $messages);
 
-        $validator->sometimes('age', 'min:0', function($input) {
-            return is_numeric($input->age);
-        });
+        // $validator->sometimes('age', 'min:0', function($input) {
+        //     return is_numeric($input->age);
+        // });
 
-        $validator->sometimes('age', 'max:200', function($input) {
-            return is_numeric($input->age);
-        });
+        // $validator->sometimes('age', 'max:200', function($input) {
+        //     return is_numeric($input->age);
+        // });
 
 
-        if ($validator->fails()) {
-            return redirect('/hello')->withErrors($validator)->withInput();
+        // if ($validator->fails()) {
+        //     return redirect('/hello')->withErrors($validator)->withInput();
 
-        }
-        // $validator->validate();
+        // }
+        // // $validator->validate();
 
-        return view('hello.index', ['msg' => '正しく入力されました。']);
+        // return view('hello.index', ['msg' => '正しく入力されました。']);
+
+        // return view('hello.index', ['msg' => '正しく入力された']);
    }
 
 
