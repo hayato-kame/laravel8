@@ -22,10 +22,13 @@ Route::get('/', function () {
 
 // Route::get('/hello',HelloController::class);
 
-Route::get('/hello',[HelloController::class, 'index']);
+Route::get('/hello',[ HelloController::class, 'index' ]);
 // Route::get('/hello/other',[HelloController::class, 'other']);
-Route::post('/hello', [ HelloController::class, 'post']);
+Route::post('/hello', [ HelloController::class, 'post' ]);
 
 
 // Route::get('hello', 'App\Http\Controllers\HelloController@index');
 // Route::get('hello/other', 'App\Http\Controllers\HelloController@other');
+
+Route::get('/hello/add', [ HelloController::class, 'add' ]);
+Route::post('/hello/add', [ HelloController::class, 'create' ]);
