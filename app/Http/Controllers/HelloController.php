@@ -16,8 +16,28 @@ class HelloController extends Controller
 {
     public function index(Request $request)
     {
-        $items = DB::select('select * from people');
+        // $items = DB::select('select * from people');
+        // return view('hello.index', ['items' => $items]);
+
+        $items = DB::table('people')->get();
         return view('hello.index', ['items' => $items]);
+
+    }
+
+    public function show(Request $request)
+    {
+        // $id = $request->id;
+        // $item = DB::table('people')->where('id', $id)->first();
+        // return view('hello.show', ['item' => $item]);
+
+        // $id = $request->id;
+        // $items = DB::table('people')->where('id', '>=', $id)->get();
+        // return view('hello.show', ['items' => $items]);
+
+        $name = $request->name;
+        $items = DB::table('people')->where('name', 'like', '%' . $name . '%')
+        ->orWhere('mail', 'like', '%' . $name . '%')->get();
+        return view('hello.show', ['items' => $items]);
     }
 
     public function post(Request $request)
