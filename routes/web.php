@@ -46,3 +46,6 @@ Route::get('/person', [ PersonController::class, 'index']);
 
 Route::get('/person/find', [ PersonController::class, 'find']);
 Route::post('/person/find', [ PersonController::class, 'search']);
+
+Route::get('/person/add', [ PersonController::class, 'add' ]);
+Route::post('/person/add', [ PersonController::class, 'create' ]);
