@@ -45,6 +45,18 @@ class PersonController extends Controller
         return redirect('/person');
     }
 
+    public function delete(Request $request)
+    {
+        $person = Person::find($request->id);
+        return view('hello.del', ['form' => $person]);
+    }
+
+    public function remove(Request $request)
+    {
+        Person::find($request->id)->delete();
+        return redirect('/person');
+    }
+
     public function find(Request $request)
     {
         return view('person.find', ['input' => '']);
