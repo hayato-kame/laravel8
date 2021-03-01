@@ -18,8 +18,9 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'file'),
-
+    // データベースに変更しました
+    // 'driver' => env('SESSION_DRIVER', 'file'),
+    'driver' => env('SESSION_DRIVER', 'database'),
     /*
     |--------------------------------------------------------------------------
     | Session Lifetime
