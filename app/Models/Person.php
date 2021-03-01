@@ -25,6 +25,11 @@ class Person extends Model
         'age' => ['integer', 'min:0', 'max:150'],
     ];
 
+    public function boards()
+    {
+        return $this->hasMany('App\Models\Board');
+    }
+
     public function getData()
     {
         return $this->id . ': ' . $this->name . ' (' . $this->age . ')';

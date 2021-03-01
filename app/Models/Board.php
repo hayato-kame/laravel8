@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Board extends Model
 {
     use HasFactory;
@@ -16,8 +17,13 @@ class Board extends Model
         'message' => 'required',
     ];
 
+    public function person()
+    {
+        return $this->belongsTo('App\Models\Person');
+    }
+
     public function getData(): string
     {
-        return $this->id . ': ' . $this->title;
+        return $this->id . ': ' . $this->title ;
     }
 }
